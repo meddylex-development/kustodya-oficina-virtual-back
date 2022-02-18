@@ -1,5 +1,7 @@
 let State = require("../models/state");
 let moment = require("moment");
+let Utilities = require('../utils/utilities');
+const { response } = require("express");
 
 /* ********** START - Add new state method ********** */
 const addState = (req, res) => {
@@ -24,16 +26,24 @@ const addState = (req, res) => {
 /* *********** END - Add new state method *********** */
 /* ********** START - List all states method ********** */
 const listStates = (req, res) => {
-    let name = req.params["name"];
-    State.find({ name: new RegExp(name, "i") }, (err, dataState) => {
-        if (err) {
-          res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
+    let tokenUser = req.headers.authorization || '';
+    Utilities.fnUserSystemValid(tokenUser).then((responseAuth) => {
+        console.log('responseAuth: ', responseAuth);
+        if (!responseAuth) {
+            res.status(401).send({ msg: "La sesión ha expirado", stateRequest: false });
         } else {
-          if (dataState) {
-            res.status(200).send({ state: dataState, stateRequest: true });
-          } else {
-            res.status(401).send({ msg: "No existen estados", stateRequest: false });
-          }
+            let name = req.params["name"];
+            State.find({ name: new RegExp(name, "i") }, (err, dataState) => {
+                if (err) {
+                  res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
+                } else {
+                  if (dataState) {
+                    res.status(200).send({ state: dataState, stateRequest: true });
+                  } else {
+                    res.status(401).send({ msg: "No existen estados", stateRequest: false });
+                  }
+                }
+            });
         }
     });
 };
