@@ -218,6 +218,19 @@ const sendEmailTemplate = (template_url, token, email_to, email_subject) => {
 
 }
 
+const encriptEmailUser = (email) => {
+    console.log('email: ', email);
+    // let testMail = "meddylex.development@gmail.com";
+    let testMail = email;
+    let collection = testMail.split("@");
+    let firstPartMail = collection[0];
+    let domainPartMail = collection[1];
+    let lastChars = firstPartMail.slice(-(firstPartMail.length/3));
+    let emailEncript = "******" + lastChars + "@" + domainPartMail;
+    console.log('emailEncript: ', emailEncript);
+    return emailEncript;
+}
+
 module.exports = {
     readHTMLFile,
     getAPIRestUrl,
@@ -230,4 +243,5 @@ module.exports = {
     fnFindUserById,
     fnUserSystemValid,
     sendEmailTemplate,
+    encriptEmailUser,
 };

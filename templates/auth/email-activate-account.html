@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Simple Responsive HTML Email With Button</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Exo:wght@100&family=Roboto:wght@100&display=swap');
+
+            h1, h2, h3 {
+                font-family: 'Exo', sans-serif;
+                font-weight: 600;
+            }
+
+            hr { 
+                display: block; 
+                height: 1px;
+                border: 0; 
+                border-top: 1px solid #ccc;
+                margin: 1em 0; 
+                padding: 0; 
+            }
+
+            p {
+                font-family: 'Roboto', sans-serif;
+                font-weight: 600;
+            }
+
+            small {
+                font-family: 'Roboto', sans-serif;
+                font-style: italic;
+                color: rgb(94, 94, 94);
+                font-size: .675em;
+            }
+
+            button {
+                font-family: 'Roboto', sans-serif;
+                font-weight: 900 !important;
+            }
+
+            @media only screen and (max-width: 620px) {
+                table[class=body] h1 {
+                    font-size: 28px !important;
+                    margin-bottom: 10px !important;
+                }
+
+                table[class=body] p,
+                table[class=body] ul,
+                table[class=body] ol,
+                table[class=body] td,
+                table[class=body] span,
+                table[class=body] a {
+                    font-size: 16px !important;
+                }
+
+                table[class=body] .wrapper,
+                table[class=body] .article {
+                    padding: 10px !important;
+                }
+
+                table[class=body] .content {
+                    padding: 0 !important;
+                }
+
+                table[class=body] .container {
+                    padding: 0 !important;
+                    width: 100% !important;
+                }
+
+                table[class=body] .main {
+                    border-left-width: 0 !important;
+                    border-radius: 0 !important;
+                    border-right-width: 0 !important;
+                }
+
+                table[class=body] .btn table {
+                    width: 100% !important;
+                }
+
+                table[class=body] .btn a {
+                    width: 100% !important;
+                }
+
+                table[class=body] .img-responsive {
+                    height: auto !important;
+                    max-width: 100% !important;
+                    width: auto !important;
+                }
+            }
+
+            @media all {
+                .ExternalClass {
+                    width: 100%;
+                }
+
+                .ExternalClass,
+                .ExternalClass p,
+                .ExternalClass span,
+                .ExternalClass font,
+                .ExternalClass td,
+                .ExternalClass div {
+                    line-height: 100%;
+                }
+
+                .apple-link a {
+                    color: inherit !important;
+                    font-family: inherit !important;
+                    font-size: inherit !important;
+                    font-weight: inherit !important;
+                    line-height: inherit !important;
+                    text-decoration: none !important;
+                }
+
+                .btn-primary table td:hover {
+                    background-color: #d5075d !important;
+                }
+
+                .btn-primary a:hover {
+                    background-color: #d5075d !important;
+                    border-color: #d5075d !important;
+                }
+            }
+        </style>
+    </head>
+    <body class style="background-color: #eaebed; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; background-color: #eaebed; width: 100%;" width="100%" bgcolor="#eaebed">
+            <tr>
+                <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">&nbsp;</td>
+                <td class="container" style="font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; max-width: 580px; padding: 10px; width: 580px; Margin: 0 auto;" width="580" valign="top">
+                    <div class="header" style="padding: 10px 0;">
+                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; width: 100%;">
+                            <tr>
+                                <td class="align-center" width="100%" style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center;" valign="top" align="center">
+                                    <a href="https://kustodya.co" style="color: #ec0867; text-decoration: underline;">
+                                        <img src="https://raw.githubusercontent.com/meddylex-development/kustodya-oficina-virtual-front/main/src/assets/images/StemCell-logo-App.png" height="60" alt="Kustodya Oficina Virtual" style="border: none; -ms-interpolation-mode: bicubic; max-width: 100%;">
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
+                        <!-- START CENTERED WHITE CONTAINER -->
+                        <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">
+                            <!-- This is preheader text. Some clients will show this text as a preview. -->
+                            Validación de registro y activación de usuario
+                        </span>
+                        <table role="presentation" class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; background: #ffffff; border-radius: 3px; width: 100%;" width="100%">
+                            <!-- START MAIN CONTENT AREA -->
+                            <tr>
+                                <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;" valign="top">
+                                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; width: 100%;" width="100%">
+                                        <tr>
+                                            <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">
+                                                <h2 style="text-align: center;">
+                                                    Activar cuenta
+                                                </h2>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center; font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 10px;" valign="top">
+                                                <img src="https://raw.githubusercontent.com/meddylex-development/kustodya-oficina-virtual-front/development/src/assets/images/web-browser.png" alt="Image verify" height="200">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 10px;" valign="top">
+                                                <p>
+                                                    Para comenzar a usar su cuenta, debe confirmar su dirección de correo electrónico. Haga clic en el botón para activar la cuenta.
+                                                    <!-- In order to start using your account, you need to confirm your email address. Click on button to activate account. -->
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 10px;" valign="top">
+                                                <a href="{{token}}" target="_blank" rel="" style="background-color: #03a9f4;padding: 20px;color: #fff;text-transform: none !important;text-decoration: none;font-weight: 600;border: 2px solid #b5dbff; border-radius: 35px;">
+                                                    <!-- Confirm email address and activate account -->
+                                                    Confirmar dirección de correo electrónico y activar cuenta
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table style="width: 100%; margin-top: 17px;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                &nbsp;
+                                                            </td>
+                                                            <td>
+                                                                <hr>
+                                                            </td>
+                                                            <td style="width: 100px; text-align: center;">
+                                                                <p style="font-size: 10px;">
+                                                                    <!-- or click in below link: -->
+                                                                    ó click en el siguiente link:
+                                                                </p>
+                                                            </td>
+                                                            <td>
+                                                                <hr>
+                                                            </td>
+                                                            <td>
+                                                                &nbsp;
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 10px;" valign="top">
+                                                <a href="{{token}}" style="font-size: 10px;" target="_blank">
+                                                    {{token}}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table style="width: 100%;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="text-align: center;">
+                                                                <small>
+                                                                    <!-- If you did not sign up for this account you can ignore this email and the account will be deleted. -->
+                                                                    Si no se registró, puede ignorar este correo electrónico y la cuenta se eliminará.
+                                                                </small>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <!-- END MAIN CONTENT AREA -->
+                        </table>
+                        <!-- START FOOTER -->
+                        <div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; width: 100%;" width="100%">
+                                <tr style="display: none !important;">
+                                    <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #9a9ea6; font-size: 12px; text-align: center;" valign="top" align="center">
+                                        <span class="apple-link" style="color: #9a9ea6; font-size: 12px; text-align: center;">Don't forget to add your address here</span>
+                                        <br> And <a href="https://kustodya.co" style="text-decoration: underline; color: #9a9ea6; font-size: 12px; text-align: center;">unsubscribe link</a> here.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #9a9ea6; font-size: 12px; text-align: center;" valign="top" align="center"> Powered by <a href="https://kustodya.co" style="color: #9a9ea6; font-size: 12px; text-align: center; text-decoration: none;">Kustodya</a>. </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- END FOOTER -->
+                        <!-- END CENTERED WHITE CONTAINER -->
+                    </div>
+                </td><td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">&nbsp;</td>
+            </tr>
+        </table>
+    </body>
+</html>

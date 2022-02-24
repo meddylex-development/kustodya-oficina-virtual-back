@@ -3,6 +3,7 @@ let Utilities = require("../utils/utilities");
 let bcrypt = require("bcrypt-nodejs");
 let jwt = require("../libs/jwt");
 let moment = require("moment");
+const e = require("express");
 
 /* ********** START - Login / Auth user method ********** */
 const userSignIn = (req, res) => {
@@ -11,7 +12,9 @@ const userSignIn = (req, res) => {
         if (err) {
             res.status(500).send({ mensaje: "Error del servidor" });
         } else {
-            if (!dataUser['userActiveRegister']) {
+            let statusActive = (dataUser) ? dataUser['userActiveRegister'] : null;
+            console.log('statusActive: ', statusActive);
+            if (!statusActive || statusActive == null) {
                 res.status(403).send({ user: null, mensaje: "La cuenta no se ha activado aun!" });
             } else {
                 if (dataUser) {
@@ -56,9 +59,12 @@ const findUserByEmail = (email) => {
     console.log('email: ', email);
     return new Promise ((resolve, reject) => {
         User.findOne({ email: email }, (err, dataUser) => {
+            console.log('dataUser: ', dataUser);
             if (err) {
+                console.log("Error isshh");
                 reject(err);
             } else {
+                console.log("No hay error lord");
                 resolve(dataUser);
             }
         });
@@ -165,50 +171,79 @@ const userSignUpAuth = (req, res) => {
         params.captcha
     ) {
         findUserByDocumentNumber(params.documentNumber).then((response) => {
-            // console.log('response: ', response);
+            console.log('response: ', response);
             if (response.data) {
-                res.status(202).send({ data: "usuario ya existe!", state: false });
-            } else {          
-                bcrypt.hash(params.password, null, null, (err, hash) => {
-                    if (hash) {
-                        user_.idState = "615f20434aadd813ca760d0d";
-                        user_.idProfile = "620ad0217bbe001342fa4ed3";
-                        user_.firstName = "";
-                        user_.secondFirstName = "";
-                        user_.lastName = "";
-                        user_.secondLastName = "";
-                        user_.idDocumentType = params.idDocumentType;
-                        // user_.idCountry = "";
-                        // user_.idCity = "";
-                        user_.documentNumber = params.documentNumber;
-                        user_.documentDateExpedition = params.documentDateExpedition;
-                        user_.email = params.email;
-                        user_.password = hash;
-                        user_.address = "";
-                        user_.phoneNumber = params.phoneNumber;
-                        user_.birthDate = "";
-                        user_.acceptTerms = params.acceptTerms;
-                        user_.captcha = params.captcha;
-                        user_.userActiveRegister = false;
-                        user_.dateCreated = moment().unix();
-                        user_.dateUpdated = moment().unix();
-                        user_.save((err, userSaved) => {
-                            console.log('err: ', err);
-                            console.log('userSaved: ', userSaved);
-                            if (err) {
-                                res.status(500).send({ err: "No se registro el usuario", state: false });
-                            } else {
-                                let templateEmailToSend = 'templates/auth/active-user.html';
-                                let emailSubject = 'Activar Cuenta - Oficina virtual';
-                                let obj = {
-                                    '_id': userSaved['_id'],
-                                };
-                                console.log('obj: ', obj);
-                                Utilities.sendEmailTemplate(templateEmailToSend, jwt.createToken(obj), params.email, emailSubject).then((responseSendEmail) => {
-                                    if (!responseSendEmail) {
-                                        res.status(500).send({ err: "No se registro el usuario", state: false });
+                
+                // Envia un mail indicando que ese usuario ya existe y que revise el correo *******algo@dominio.com
+                let emailEncripted = Utilities.encriptEmailUser(response['data']['email']);
+                console.log('emailEncripted: ', emailEncripted);
+                res.status(202).send({ data: "usuario ya existe!\n Inicia sesion con " + emailEncripted, state: false });
+
+            } else {
+                findUserByEmail(params.email).then((respEmail) => {
+                    console.log('respEmail: ', respEmail);
+                    if (respEmail) {
+                    
+                        let emailEncripted = Utilities.encriptEmailUser(respEmail['email']);
+                        console.log('emailEncripted: ', emailEncripted);
+                        res.status(202).send({ data: "El correo electrónico ya se encuentra registrado!\n Inicia sesion con " + emailEncripted, state: false });
+
+                    } else {
+                        bcrypt.hash(params.password, null, null, (err, hash) => {
+                            if (hash) {
+                                user_.idState = "615f20434aadd813ca760d0d";
+                                user_.idProfile = "620ad0217bbe001342fa4ed3";
+                                user_.firstName = "";
+                                user_.secondFirstName = "";
+                                user_.lastName = "";
+                                user_.secondLastName = "";
+                                user_.idDocumentType = params.idDocumentType;
+                                // user_.idCountry = "";
+                                // user_.idCity = "";
+                                user_.documentNumber = params.documentNumber;
+                                user_.documentDateExpedition = params.documentDateExpedition;
+                                user_.email = params.email;
+                                user_.password = hash;
+                                user_.address = "";
+                                user_.phoneNumber = params.phoneNumber;
+                                user_.birthDate = "";
+                                user_.acceptTerms = params.acceptTerms;
+                                user_.captcha = params.captcha;
+                                user_.userActiveRegister = false;
+                                user_.dateCreated = moment().unix();
+                                user_.dateUpdated = moment().unix();
+                                user_.save((err, userSaved) => {
+                                    console.log('err: ', err);
+                                    console.log('userSaved: ', userSaved);
+                                    if (err) {
+                                        res.status(500).send({ err: "No se registro el usuario 1", state: false });
                                     } else {
-                                        res.status(200).send({ data: userSaved, state: true });
+
+                                        fnSendMailTemplate(userSaved, "templates/auth/email-activate-account.html", "Activar Cuenta - Oficina virtual", params.email).then(resp => {
+                                            console.log('resp: ', resp);
+                                            if (resp.state) {
+                                                res.status(200).send({ data: userSaved, state: true });
+                                            } else {
+                                                res.status(500).send({ err: "No se registro el usuario 2", state: false });
+                                            }
+                                        }).catch(err => {
+                                            console.log('err: ', err);
+                                            res.status(500).send({ err: "Ocurrio un error!", state: false });
+                                        });
+                                        
+                                        // let templateEmailToSend = 'templates/auth/active-user.html';
+                                        // let emailSubject = 'Activar Cuenta - Oficina virtual';
+                                        // let obj = {
+                                        //     '_id': userSaved['_id'],
+                                        // };
+                                        // console.log('obj: ', obj);
+                                        // Utilities.sendEmailTemplate(templateEmailToSend, jwt.createToken(obj), params.email, emailSubject).then((responseSendEmail) => {
+                                        //     if (!responseSendEmail) {
+                                        //         res.status(500).send({ err: "No se registro el usuario", state: false });
+                                        //     } else {
+                                        //         res.status(200).send({ data: userSaved, state: true });
+                                        //     }
+                                        // });
                                     }
                                 });
                             }
@@ -217,12 +252,32 @@ const userSignUpAuth = (req, res) => {
                 });
             }
         });
-
     } else {
         res.status(405).send({ err: "No se guardo un dato" });
     }
 };
 /* *********** END - Add new user method *********** */
+/* ********** START - Send Mail Async method ********** */
+const fnSendMailTemplate = (data_obj, email_template, email_subject, email_address) => {
+
+    return new Promise((resolve, reject) => {
+        let obj = {
+            '_id': data_obj['_id'],
+        };
+        console.log('obj: ', obj);
+        Utilities.sendEmailTemplate(email_template, jwt.createToken(obj), email_address, email_subject).then((responseSendEmail) => {
+            if (!responseSendEmail) {
+                // res.status(500).send({ err: "No se registro el usuario", state: false });
+                reject(new Error("Ocurrio un error!"));
+            } else {
+                // res.status(200).send({ data: data_obj, state: true });
+                resolve({ data: data_obj, state: true });
+            }
+        });
+    });
+
+};
+/* *********** END - Send Mail Async method *********** */
 /* ********** START - List all users method ********** */
 const userList = (req, res) => {
     let documentNumber = req.params["documentNumber"];
