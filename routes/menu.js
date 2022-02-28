@@ -5,6 +5,7 @@ let api = express.Router();
 api.post("/menu/add", Menu.addMenu);
 api.get("/menu/list", Menu.listMenus);
 api.post("/menu/:name?", Menu.listMenus);
+api.post("/menu-by-id/:id?", Menu.listMenusById);
 api.put('/menu/:id', Menu.updateMenu);
 api.delete('/menu/:id', Menu.deleteMenu);
 

@@ -5,6 +5,7 @@ let api = express.Router();
 api.post("/menu-profile/add", MenuProfile.addMenuProfile);
 api.get("/menu-profile/list", MenuProfile.listMenuProfiles);
 api.post("/menu-profile/:description?", MenuProfile.listMenuProfiles);
+api.get("/menu-profile-by-profile-id/:idProfile?", MenuProfile.listMenuProfilesByProfileId);
 api.put('/menu-profile/:id', MenuProfile.updateMenuProfile);
 api.delete('/menu-profile/:id', MenuProfile.deleteMenuProfile);
 

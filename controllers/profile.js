@@ -39,6 +39,22 @@ const listProfiles = (req, res) => {
     });
 };
 /* *********** END - List all profiles method *********** */
+/* ********** START - List all profiles by id method ********** */
+const listProfilesById = (req, res) => {
+    let idProfile = req.params["id"];
+    Profile.find({ _id: idProfile }, (err, dataProfile) => {
+        if (err) {
+          res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
+        } else {
+          if (dataProfile) {
+            res.status(200).send({ data: dataProfile, stateRequest: true });
+          } else {
+            res.status(401).send({ msg: "No existen perfiles", stateRequest: false });
+          }
+        }
+    });
+};
+/* *********** END - List all profiles by id method *********** */
 /* ********** START - Update profile method ********** */
 const updateProfile = (req, res) => {
     let id = req.params["id"];
@@ -89,6 +105,7 @@ const deleteProfile = (req, res) => {
 module.exports = {
     addProfile,
     listProfiles,
+    listProfilesById,
     updateProfile,
     deleteProfile,
 };

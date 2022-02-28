@@ -19,7 +19,7 @@ const addMenu = (req, res) => {
             res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
         } else {
             if (menuSaved) {
-                res.status(200).send({ menu: menuSaved, stateRequest: true });
+                res.status(200).send({ data: menuSaved, stateRequest: true });
             } else {
                 res.status(401).send({ msg: "No se pudo registrar el menú", stateRequest: false });
             }
@@ -35,7 +35,7 @@ const listMenus = (req, res) => {
           res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
         } else {
           if (dataMenu) {
-            res.status(200).send({ menu: dataMenu, stateRequest: true });
+            res.status(200).send({ data: dataMenu, stateRequest: true });
           } else {
             res.status(401).send({ msg: "No existen menú", stateRequest: false });
           }
@@ -43,6 +43,22 @@ const listMenus = (req, res) => {
     });
 };
 /* *********** END - List all menus method *********** */
+/* ********** START - List all Menus by id method ********** */
+const listMenusById = (req, res) => {
+    let idMenu = req.params["id"];
+    Menu.find({ _id: idMenu }, (err, dataMenu) => {
+        if (err) {
+          res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
+        } else {
+          if (dataMenu) {
+            res.status(200).send({ data: dataMenu, stateRequest: true });
+          } else {
+            res.status(401).send({ msg: "No existen menus", stateRequest: false });
+          }
+        }
+    });
+};
+/* *********** END - List all Menus by id method *********** */
 /* ********** START - Update profile method ********** */
 const updateMenu = (req, res) => {
     let id = req.params["id"];
@@ -64,7 +80,7 @@ const updateMenu = (req, res) => {
                 res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
             } else {
                 if (dataMenu) {
-                    res.status(200).send({ menu: dataMenu, stateRequest: true });
+                    res.status(200).send({ data: dataMenu, stateRequest: true });
                 } else {
                     res.status(403).send({ msg: "El estado no se pudo actualizar", stateRequest: false });
                 }
@@ -84,7 +100,7 @@ const deleteMenu = (req, res) => {
                 res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
             } else {
                 if (dataMenu) {
-                    res.status(200).send({ menu: dataMenu, stateRequest: true });
+                    res.status(200).send({ data: dataMenu, stateRequest: true });
                 } else {
                     res.status(403).send({ msg: "El estado no se pudo eliminar", stateRequest: false });
                 }
@@ -97,6 +113,7 @@ const deleteMenu = (req, res) => {
 module.exports = {
     addMenu,
     listMenus,
+    listMenusById,
     updateMenu,
     deleteMenu,
 };

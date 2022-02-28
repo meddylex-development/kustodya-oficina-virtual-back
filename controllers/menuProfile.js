@@ -15,7 +15,7 @@ const addMenuProfile = (req, res) => {
             res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
         } else {
             if (menuProfile) {
-                res.status(200).send({ menuProfile: menuProfile, stateRequest: true });
+                res.status(200).send({ data: menuProfile, stateRequest: true });
             } else {
                 res.status(401).send({ msg: "No se pudo registrar el menu por perfil", stateRequest: false });
             }
@@ -31,7 +31,7 @@ const listMenuProfiles = (req, res) => {
           res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
         } else {
           if (dataMenuProfile) {
-            res.status(200).send({ menuProfile: dataMenuProfile, stateRequest: true });
+            res.status(200).send({ data: dataMenuProfile, stateRequest: true });
           } else {
             res.status(401).send({ msg: "No existen menus por perfil", stateRequest: false });
           }
@@ -39,6 +39,23 @@ const listMenuProfiles = (req, res) => {
     });
 };
 /* *********** END - List all menu by profile method *********** */
+/* ********** START - List all MenuProfiles by profile id method ********** */
+const listMenuProfilesByProfileId = (req, res) => {
+    let idProfile = req.params["idProfile"];
+    console.log('idProfile: ', idProfile);
+    MenuProfile.find({ idProfile: idProfile }, (err, dataMenuProfile) => {
+        if (err) {
+          res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
+        } else {
+          if (dataMenuProfile) {
+            res.status(200).send({ data: dataMenuProfile, stateRequest: true });
+          } else {
+            res.status(401).send({ msg: "No existen menus perfiles", stateRequest: false });
+          }
+        }
+    });
+};
+/* *********** END - List all MenuProfiles by profile id method *********** */
 /* ********** START - Update menu by profile method ********** */
 const updateMenuProfile = (req, res) => {
     let id = req.params["id"];
@@ -56,7 +73,7 @@ const updateMenuProfile = (req, res) => {
                 res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
             } else {
                 if (dataMenuProfile) {
-                    res.status(200).send({ menuProfile: dataMenuProfile, stateRequest: true });
+                    res.status(200).send({ data: dataMenuProfile, stateRequest: true });
                 } else {
                     res.status(403).send({ msg: "El menu por perfil no se pudo actualizar", stateRequest: false });
                 }
@@ -76,7 +93,7 @@ const deleteMenuProfile = (req, res) => {
                 res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });
             } else {
                 if (dataMenuProfile) {
-                    res.status(200).send({ state: dataMenuProfile, stateRequest: true });
+                    res.status(200).send({ data: dataMenuProfile, stateRequest: true });
                 } else {
                     res.status(403).send({ msg: "El menu por perfil no se pudo eliminar", stateRequest: false });
                 }
@@ -89,6 +106,7 @@ const deleteMenuProfile = (req, res) => {
 module.exports = {
     addMenuProfile,
     listMenuProfiles,
+    listMenuProfilesByProfileId,
     updateMenuProfile,
     deleteMenuProfile,
 };
