@@ -20,7 +20,7 @@ exports.createToken = (user) => {
         // phoneNumber: user.phoneNumber,
         // birthDate: user.birthDate,
         dateExp: moment(moment().add(1, 'day')).valueOf(),
-        iat: moment().unix(),
+        iat:  moment().valueOf(),
     };
     return jwt.encode(payload, secret);
 };

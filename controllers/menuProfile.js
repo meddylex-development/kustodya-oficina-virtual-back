@@ -42,7 +42,6 @@ const listMenuProfiles = (req, res) => {
 /* ********** START - List all MenuProfiles by profile id method ********** */
 const listMenuProfilesByProfileId = (req, res) => {
     let idProfile = req.params["idProfile"];
-    console.log('idProfile: ', idProfile);
     MenuProfile.find({ idProfile: idProfile }, (err, dataMenuProfile) => {
         if (err) {
           res.status(500).send({ msg: "Error al conectar al servidor", stateRequest: false });

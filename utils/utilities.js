@@ -167,10 +167,8 @@ const fnFindUserById = (id_user) => {
 };
 
 const fnUserSystemValid = (token) => {
-    console.log('token: ', token);
     return new Promise((resolve, reject) => {
         fnAuthToken(token).then((responseAuthToken) => {
-            console.log('responseAuthToken: ', responseAuthToken);
             let idUser = responseAuthToken['_id'] || '';
             if (!idUser) {
                 reject(false)
@@ -183,7 +181,7 @@ const fnUserSystemValid = (token) => {
     });
 }
 
-const sendEmailTemplate = (template_url, token, email_to, email_subject) => {
+const sendEmailTemplate = (template_url, token, email_to, email_subject, temporal_password = '') => {
     return new Promise((resolve, reject) => {
         if (!template_url || !token || !email_to || !email_subject) {
             reject(false);
@@ -195,6 +193,9 @@ const sendEmailTemplate = (template_url, token, email_to, email_subject) => {
                 let replacementsHTML = {
                     token: 'http://localhost:4200/#/auth/activate-account?payload=' + token,
                 };
+                if (temporal_password) {
+                    replacementsHTML['temporalPass'] = temporal_password;
+                }
                 let dataInfoMail = {
                     from: 'Meddylex Oficina Virtual <meddylex.development@gmail.com>',
                     to: email_to,
@@ -219,7 +220,6 @@ const sendEmailTemplate = (template_url, token, email_to, email_subject) => {
 }
 
 const encriptEmailUser = (email) => {
-    console.log('email: ', email);
     // let testMail = "meddylex.development@gmail.com";
     let testMail = email;
     let collection = testMail.split("@");
@@ -227,7 +227,6 @@ const encriptEmailUser = (email) => {
     let domainPartMail = collection[1];
     let lastChars = firstPartMail.slice(-(firstPartMail.length/3));
     let emailEncript = "******" + lastChars + "@" + domainPartMail;
-    console.log('emailEncript: ', emailEncript);
     return emailEncript;
 }
 

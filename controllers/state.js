@@ -28,7 +28,6 @@ const addState = (req, res) => {
 const listStates = (req, res) => {
     let tokenUser = req.headers.authorization || '';
     Utilities.fnUserSystemValid(tokenUser).then((responseAuth) => {
-        console.log('responseAuth: ', responseAuth);
         if (!responseAuth) {
             res.status(401).send({ msg: "La sesión ha expirado", stateRequest: false });
         } else {
@@ -113,7 +112,6 @@ const deleteState = (req, res) => {
 const deleteAllState = (req, res) => {
     // let id = req.params["id"];
     let params = req.body;
-    console.log('params: ', params);
     State.deleteMany(
         {}, 
         (err, dataState) => {
